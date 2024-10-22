@@ -11,8 +11,4 @@ import { Route, Routes
         path:'sign-up',
         loadComponent:()=>import('./sign-up/sign-up.component')
     },
-    {
-        path:'ejemplo1',
-        loadComponent: () => import('./formulario/ejemplo1.component')
-    },
  ]as Routes 
