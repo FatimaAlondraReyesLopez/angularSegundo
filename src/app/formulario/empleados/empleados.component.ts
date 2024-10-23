@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  // Importar FormsModule para ngModel
+import { FormsModule } from '@angular/forms';
 
 interface Empleado {
   matricula: string;
@@ -12,8 +12,8 @@ interface Empleado {
 
 @Component({
   selector: 'app-empleados',
-  standalone: true,  // Marcar como standalone
-  imports: [CommonModule, FormsModule],  // Asegurarse de importar FormsModule para usar ngModel
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.css']
 })
@@ -27,12 +27,16 @@ export default class EmpleadosComponent {
   };
 
   empleados: Empleado[] = [];
-emp: any;
+  mostrarTabla: boolean = false; // Controla la visibilidad de la tabla
 
   agregarEmpleado() {
-    const nuevoEmpleado = { ...this.empleado };
-    this.empleados.push(nuevoEmpleado);
-    this.resetFormulario();
+    if (this.empleado.matricula && this.empleado.nombre) { // Verifica que el empleado tenga matrícula y nombre
+      const nuevoEmpleado = { ...this.empleado };
+      this.empleados.push(nuevoEmpleado);
+      this.resetFormulario();
+    } else {
+      alert("Por favor, complete los campos de matrícula y nombre.");
+    }
   }
 
   resetFormulario() {
@@ -45,36 +49,38 @@ emp: any;
     };
   }
 
-  modificarEmpleado(matricula: string) {
-    const index = this.empleados.findIndex(emp => emp.matricula === matricula);
-    if (index !== -1) {
-      this.empleado = { ...this.empleados[index] };  // Cargar los datos del empleado en el formulario
-      this.eliminarEmpleado(matricula);  // Eliminar el empleado para actualizarlo después
-    }
-  }
-
-  eliminarEmpleado(matricula: string) {
-    this.empleados = this.empleados.filter(emp => emp.matricula !== matricula);
-  }
-
-  imprimir() {
-    const listaEmpleados = this.empleados.map(emp => 
-      `Matrícula: ${emp.matricula}, Nombre: ${emp.nombre}, Correo: ${emp.correo}, Edad: ${emp.edad}, Horas: ${emp.horas}`
-    ).join('\n');
-  
-    const ventanaImpresion = window.open('', '_blank');
-    
-    if (ventanaImpresion) {  // Verifica que la ventana no sea null
-      ventanaImpresion.document.write('<pre>' + listaEmpleados + '</pre>');
-      ventanaImpresion.document.close();
-      ventanaImpresion.print();
+  cargarUltimoEmpleado() {
+    if (this.empleados.length > 0) {
+      const lastIndex = this.empleados.length - 1; // Obtiene el índice del último empleado
+      this.empleado = { ...this.empleados[lastIndex] }; // Carga los datos del último empleado en el formulario
     } else {
-      console.error('No se pudo abrir la ventana de impresión.'); // Manejo de error en caso de que no se abra
+      alert("No hay empleados para modificar.");
     }
-  }  
+  }
+
+  modificarEmpleado() {
+    if (this.empleados.length > 0) {
+      const lastIndex = this.empleados.length - 1; // Obtiene el índice del último empleado
+      this.empleados[lastIndex] = { ...this.empleado }; // Actualiza el último empleado con los datos del formulario
+      this.resetFormulario(); // Resetea el formulario
+    }
+  }
+
+  eliminarEmpleado() {
+    if (this.empleados.length > 0) {
+      this.empleados.pop(); // Elimina el último empleado de la lista
+      this.resetFormulario(); // Resetea el formulario
+    } else {
+      alert("No hay empleados para eliminar.");
+    }
+  }
 
   calcularSueldo(horas: number): number {
-    const tarifaPorHora = 100; // Define una tarifa por hora (ajusta según tus necesidades)
+    const tarifaPorHora = 100; // Asume que la tarifa por hora es 100
     return horas * tarifaPorHora;
+  }
+
+  imprimirDatos() {
+    this.mostrarTabla = true; // Muestra la tabla con los datos guardados
   }
 }

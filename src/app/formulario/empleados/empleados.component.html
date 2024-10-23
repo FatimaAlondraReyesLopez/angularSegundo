@@ -1,131 +1,118 @@
 <div class="grid grid-cols-5 grid-rows-3 gap-7">
+  <!-- Formulario para ingresar empleados -->
   <div class="col-span-2 row-span-2">
     <div>
-      <label
-        for="nombre"
-        class="block mb-2 text-sm font-medium text-black dark:text-black"
-      >Nombre</label>
+      <label for="nombre" class="block mb-2 text-sm font-medium text-black dark:text-black">Nombre</label>
       <input
         type="text"
         id="nombre"
-        [(ngModel)]="empleado.nombre" 
-        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="empleado.nombre"
+        class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       />
     </div>
+
     <div>
-      <label
-        for="matricula"
-        class="block mb-2 text-sm font-medium text-black dark:text-black"
-      >Matricula</label>
+      <label for="matricula" class="block mb-2 text-sm font-medium text-black dark:text-black">Matrícula</label>
       <input
         type="text"
         id="matricula"
-        [(ngModel)]="empleado.matricula" 
-        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="empleado.matricula"
+        class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       />
     </div>
+
     <div>
-      <label
-        for="correo"
-        class="block mb-2 text-sm font-medium text-black dark:text-black"
-      >Correo</label>
+      <label for="correo" class="block mb-2 text-sm font-medium text-black dark:text-black">Correo</label>
       <input
         type="email"
         id="correo"
-        [(ngModel)]="empleado.correo" 
-        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="empleado.correo"
+        class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       />
     </div>
+
     <div>
-      <label
-        for="edad"
-        class="block mb-2 text-sm font-medium text-black dark:text-black"
-      >Edad</label>
+      <label for="edad" class="block mb-2 text-sm font-medium text-black dark:text-black">Edad</label>
       <input
         type="number"
         id="edad"
-        [(ngModel)]="empleado.edad" 
-        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="empleado.edad"
+        class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       />
     </div>
+
     <div>
-      <label
-        for="horasTrabajadas"
-        class="block mb-2 text-sm font-medium text-black dark:text-black"
-      >Horas Trabajadas</label>
+      <label for="horasTrabajadas" class="block mb-2 text-sm font-medium text-black dark:text-black">Horas Trabajadas</label>
       <input
         type="number"
         id="horasTrabajadas"
-        [(ngModel)]="empleado.horas" 
-        class="bg-gray-50 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="empleado.horas"
+        class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       />
     </div>
   </div>
+
+  <!-- Botón para agregar empleado -->
   <div class="col-start-1 row-start-3">
     <button
       type="button"
       (click)="agregarEmpleado()"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
     >
       Registrar
     </button>
+    <button
+      type="button"
+      (click)="cargarUltimoEmpleado()"
+      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+    >
+      Modificar Último
+    </button>
   </div>
+
+  <!-- Tabla para mostrar empleados -->
   <div class="col-span-3 row-span-3 col-start-3 row-start-1">
     <button
       type="button"
-      (click)="imprimir()" 
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      (click)="imprimirDatos()"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
     >
-      Imprimir Tabla
+      Imprimir
     </button>
-    <div class="relative overflow-x-auto">
-      <table
-        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-      >
-        <thead
-          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-        >
+    <div class="relative overflow-x-auto" *ngIf="mostrarTabla">
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" class="px-6 py-3">Matricula</th>
+            <th scope="col" class="px-6 py-3">Matrícula</th>
             <th scope="col" class="px-6 py-3">Nombre</th>
             <th scope="col" class="px-6 py-3">Correo</th>
             <th scope="col" class="px-6 py-3">Edad</th>
             <th scope="col" class="px-6 py-3">Horas Trabajadas</th>
+            <th scope="col" class="px-6 py-3">Salario</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let emp of empleados"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          >
+          <tr *ngFor="let emp of empleados" class="bg-white border-b">
             <td class="px-6 py-4">{{ emp.matricula }}</td>
             <td class="px-6 py-4">{{ emp.nombre }}</td>
             <td class="px-6 py-4">{{ emp.correo }}</td>
             <td class="px-6 py-4">{{ emp.edad }}</td>
             <td class="px-6 py-4">{{ emp.horas }}</td>
+            <td class="px-6 py-4">{{ calcularSueldo(emp.horas) }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="grid grid-cols-1 grid-rows-2">
-      <div>
-        <button
-          type="button"
-          (click)="modificarEmpleado(emp.matricula)" 
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          Modificar
-        </button>
-      </div>
-      <div>
-        <button
-          type="button"
-          (click)="eliminarEmpleado(emp.matricula)"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-        >
-          Eliminar
-        </button>
-      </div>
-    </div>
+  </div>
+
+  <!-- Botón para eliminar -->
+  <div class="col-start-3 row-start-4">
+    <button
+      type="button"
+      (click)="eliminarEmpleado()"
+      class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+    >
+      Eliminar Último
+    </button>
   </div>
 </div>

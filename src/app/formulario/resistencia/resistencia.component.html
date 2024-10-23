@@ -4,7 +4,7 @@
       <label for="color1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Primera Banda</label>
       <select
         id="color1"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         formControlName="color1">
         <option value="Negro">Negro</option>
         <option value="Cafe">Cafe</option>
@@ -22,7 +22,7 @@
       <label for="color2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Segunda Banda</label>
       <select
         id="color2"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 dark:text-pink-800 dark:focus:ring-blue-500 dark:focus:border-blue-500"
         formControlName="color2">
         <option value="Negro">Negro</option>
         <option value="Cafe">Cafe</option>
@@ -40,7 +40,7 @@
       <label for="color3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Tercera Banda</label>
       <select
         id="color3"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         formControlName="color3">
         <option value="Negro">Negro</option>
         <option value="Cafe">Cafe</option>
@@ -55,22 +55,6 @@
       </select>
     </div>
     <div>
-      <label for="color4" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cuarta Banda</label>
-      <select
-        id="color4"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        formControlName="color4">
-        <option value="Negro">Negro</option>
-        <option value="Cafe">Cafe</option>
-        <option value="Rojo">Rojo</option>
-        <option value="Naranja">Naranja</option>
-        <option value="Amarillo">Amarillo</option>
-        <option value="Verde">Verde</option>
-        <option value="Azul">Azul</option>
-        <option value="Violeta">Violeta</option>
-        <option value="Gris">Gris</option>
-        <option value="Blanco">Blanco</option>
-      </select>
     </div>
     <div class="pl-14">
       <h1 class="m-2">Tolerancia</h1>
@@ -114,13 +98,12 @@
 </div>
 
 <div class="flex justify-center pt-4">
-  <table class="w-10/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+  <table class="w-10/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-950">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">Color 1</th>
         <th scope="col" class="px-6 py-3">Color 2</th>
         <th scope="col" class="px-6 py-3">Color 3</th>
-        <th scope="col" class="px-6 py-3">Color 4</th>
         <th scope="col" class="px-6 py-3">Tolerancia</th>
         <th scope="col" class="px-6 py-3">Valor</th>
         <th scope="col" class="px-6 py-3">Valor Mínimo</th>
@@ -129,7 +112,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let resistencia of resistencias" 
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          class="bg-white border-b dark:bg-gray-100 dark:border-gray-700">
         <td [ngStyle]="{ 'background-color': colorMap[resistencia.color1] || 'transparent' }">
           {{ resistencia.color1 }}
         </td>
@@ -139,10 +122,9 @@
         <td [ngStyle]="{ 'background-color': colorMap[resistencia.color3] || 'transparent' }">
           {{ resistencia.color3 }}
         </td>
-        <td [ngStyle]="{ 'background-color': colorMap[resistencia.color4] || 'transparent' }">
-          {{ resistencia.color4 }}
-        </td>
-        <td>{{ resistencia.tolerancia }}</td>
+        <td [ngStyle]="{ 'background-color': colorMap[resistencia.tolerancia] || 'transparent' }">
+          {{ resistencia.tolerancia }}
+        </td>        
         <td>{{ calcularValor(resistencia) }}</td>
         <td>{{ calcularValorMinimo(resistencia) }}</td>
         <td>{{ calcularValorMaximo(resistencia) }}</td>

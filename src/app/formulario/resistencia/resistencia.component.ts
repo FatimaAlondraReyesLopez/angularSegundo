@@ -6,7 +6,6 @@ interface Colores {
   color1: string;
   color2: string;
   color3: string;
-  color4: string; 
   tolerancia: string;
 }
 
@@ -79,19 +78,17 @@ export default class ResistenciaComponent implements OnInit {
       color1: [''],
       color2: [''],
       color3: [''],
-      color4: [''],
       tolerancia: [''],
     });
   }
 
   onSubmit(): void {
-    const { color1, color2, color3, color4, tolerancia } = this.formGroup.value;
+    const { color1, color2, color3, tolerancia } = this.formGroup.value;
 
     const nuevaResistencia: Colores = {
       color1,
       color2,
       color3,
-      color4,
       tolerancia,
     };
 
