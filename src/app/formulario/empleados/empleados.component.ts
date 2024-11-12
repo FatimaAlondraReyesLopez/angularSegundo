@@ -76,9 +76,14 @@ export default class EmpleadosComponent {
   }
 
   calcularSueldo(horas: number): number {
-    const tarifaPorHora = 100; // Asume que la tarifa por hora es 100
-    return horas * tarifaPorHora;
+    const tarifaPorHoraNormal = 70;
+    const tarifaPorHoraExtra = 140;
+    const horasNormales = Math.min(horas, 40); // Máximo de 40 horas normales
+    const horasExtras = Math.max(horas - 40, 0); // Horas adicionales son consideradas extra
+  
+    return (horasNormales * tarifaPorHoraNormal) + (horasExtras * tarifaPorHoraExtra);
   }
+  
 
   imprimirDatos() {
     this.mostrarTabla = true; // Muestra la tabla con los datos guardados
