@@ -82,7 +82,9 @@
             <th scope="col" class="px-6 py-3">Correo</th>
             <th scope="col" class="px-6 py-3">Edad</th>
             <th scope="col" class="px-6 py-3">Horas Trabajadas</th>
-            <th scope="col" class="px-6 py-3">Salario</th>
+            <th scope="col" class="px-6 py-3">Pago Horas Normales</th>
+            <th scope="col" class="px-6 py-3">Pago Horas Extra</th>
+            <th scope="col" class="px-6 py-3">Subtotal</th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +94,14 @@
             <td class="px-6 py-4">{{ emp.correo }}</td>
             <td class="px-6 py-4">{{ emp.edad }}</td>
             <td class="px-6 py-4">{{ emp.horas }}</td>
-            <td class="px-6 py-4">{{ calcularSueldo(emp.horas) }}</td>
+            <td class="px-6 py-4">{{ calcularDesgloseSalario(emp.horas).pagoHorasNormales | currency:'MXN':'symbol-narrow':'1.2-2' }}</td>
+            <td class="px-6 py-4">{{ calcularDesgloseSalario(emp.horas).pagoHorasExtra | currency:'MXN':'symbol-narrow':'1.2-2' }}</td>
+            <td class="px-6 py-4">{{ calcularDesgloseSalario(emp.horas).subtotal | currency:'MXN':'symbol-narrow':'1.2-2' }}</td>
+          </tr>
+          <!-- Total row -->
+          <tr class="bg-gray-100 font-bold">
+            <td colspan="7" class="px-6 py-4 text-right">Total Nómina:</td>
+            <td class="px-6 py-4">{{ calcularTotalNomina() | currency:'MXN':'symbol-narrow':'1.2-2' }}</td>
           </tr>
         </tbody>
       </table>
@@ -110,10 +119,10 @@
     </button>
     <button
       type="button"
-      (click)="cargarUltimoEmpleado()"
+      (click)="modificarEmpleado()"
       class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
     >
-      Modificar Último
+      Modificar
     </button>
   </div>
 

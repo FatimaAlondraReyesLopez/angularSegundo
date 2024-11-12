@@ -10,6 +10,12 @@ interface Empleado {
   horas: number;
 }
 
+interface CalculoSalario {
+  pagoHorasNormales: number;
+  pagoHorasExtra: number;
+  subtotal: number;
+}
+
 @Component({
   selector: 'app-empleados',
   standalone: true,
@@ -27,15 +33,27 @@ export default class EmpleadosComponent {
   };
 
   empleados: Empleado[] = [];
-  mostrarTabla: boolean = false; // Controla la visibilidad de la tabla
+  mostrarTabla: boolean = false;
+  modoEdicion: boolean = false;
+  mensajeError: string = '';
+  
+  readonly TARIFA_NORMAL = 70;
+  readonly TARIFA_EXTRA = 140;
+  readonly HORAS_NORMALES_MAX = 40;
 
   agregarEmpleado() {
-    if (this.empleado.matricula && this.empleado.nombre) { // Verifica que el empleado tenga matrícula y nombre
+    if (this.empleado.matricula && this.empleado.nombre) {
+      // Verificar si la matrícula ya existe
+      if (this.empleados.some(emp => emp.matricula === this.empleado.matricula)) {
+        this.mensajeError = "Error: La matrícula ya existe.";
+        return;
+      }
       const nuevoEmpleado = { ...this.empleado };
       this.empleados.push(nuevoEmpleado);
       this.resetFormulario();
+      this.mensajeError = '';
     } else {
-      alert("Por favor, complete los campos de matrícula y nombre.");
+      this.mensajeError = "Por favor, complete los campos de matrícula y nombre.";
     }
   }
 
@@ -47,45 +65,69 @@ export default class EmpleadosComponent {
       edad: 0,
       horas: 0
     };
-  }
-
-  cargarUltimoEmpleado() {
-    if (this.empleados.length > 0) {
-      const lastIndex = this.empleados.length - 1; // Obtiene el índice del último empleado
-      this.empleado = { ...this.empleados[lastIndex] }; // Carga los datos del último empleado en el formulario
-    } else {
-      alert("No hay empleados para modificar.");
-    }
+    this.modoEdicion = false;
+    this.mensajeError = '';
   }
 
   modificarEmpleado() {
-    if (this.empleados.length > 0) {
-      const lastIndex = this.empleados.length - 1; // Obtiene el índice del último empleado
-      this.empleados[lastIndex] = { ...this.empleado }; // Actualiza el último empleado con los datos del formulario
-      this.resetFormulario(); // Resetea el formulario
+    if (!this.empleado.matricula) {
+      this.mensajeError = "Por favor, complete los campos de matrícula.";
+      return;
+    }
+
+    const index = this.empleados.findIndex(emp => emp.matricula === this.empleado.matricula);
+    if (index !== -1) {
+      this.empleados[index] = { ...this.empleado };
+      this.resetFormulario();
+      this.mensajeError = '';
+    } else {
+      this.mensajeError = "Error al modificar el empleado.";
+    }
+  }
+
+  cargarDatosEmpleado(matricula: string) {
+    const empleadoEncontrado = this.empleados.find(emp => emp.matricula === matricula);
+    if (empleadoEncontrado) {
+      this.empleado = { ...empleadoEncontrado };
+      this.modoEdicion = true;
+      this.mensajeError = '';
+    } else {
+      this.mensajeError = "No se encontró ningún empleado con esa matrícula.";
     }
   }
 
   eliminarEmpleado() {
     if (this.empleados.length > 0) {
-      this.empleados.pop(); // Elimina el último empleado de la lista
-      this.resetFormulario(); // Resetea el formulario
+      this.empleados.pop();
+      this.resetFormulario();
     } else {
-      alert("No hay empleados para eliminar.");
+      this.mensajeError = "No hay empleados para eliminar.";
     }
   }
 
-  calcularSueldo(horas: number): number {
-    const tarifaPorHoraNormal = 70;
-    const tarifaPorHoraExtra = 140;
-    const horasNormales = Math.min(horas, 40); // Máximo de 40 horas normales
-    const horasExtras = Math.max(horas - 40, 0); // Horas adicionales son consideradas extra
-  
-    return (horasNormales * tarifaPorHoraNormal) + (horasExtras * tarifaPorHoraExtra);
+  calcularDesgloseSalario(horas: number): CalculoSalario {
+    const horasNormales = Math.min(horas, this.HORAS_NORMALES_MAX);
+    const horasExtras = Math.max(horas - this.HORAS_NORMALES_MAX, 0);
+    
+    const pagoHorasNormales = horasNormales * this.TARIFA_NORMAL;
+    const pagoHorasExtra = horasExtras * this.TARIFA_EXTRA;
+    const subtotal = pagoHorasNormales + pagoHorasExtra;
+    
+    return {
+      pagoHorasNormales,
+      pagoHorasExtra,
+      subtotal
+    };
   }
-  
+
+  calcularTotalNomina(): number {
+    return this.empleados.reduce((total, emp) => {
+      const { subtotal } = this.calcularDesgloseSalario(emp.horas);
+      return total + subtotal;
+    }, 0);
+  }
 
   imprimirDatos() {
-    this.mostrarTabla = true; // Muestra la tabla con los datos guardados
+    this.mostrarTabla = true;
   }
 }
